@@ -11,8 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+
 
 @Composable
 fun NewsItem(article: HomeItem) {
@@ -25,7 +27,7 @@ fun NewsItem(article: HomeItem) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = article.title ?: "No Title",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

@@ -12,9 +12,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NewsTheme {
-                NewsHomeScreen(
-                    NewsHomeScreen()
-                )
+                NewsHomeScreen()
             }
         }
     }
