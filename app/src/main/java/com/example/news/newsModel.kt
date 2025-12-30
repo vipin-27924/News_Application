@@ -23,10 +23,11 @@ class NewsViewModel : ViewModel(){
     private fun fetchnews() {
         viewModelScope.launch {
             try {
-                newsList = RetrofitInstance.api.getTopHeadlines().articles
+                val response = RetrofitInstance.api.getTopHeadlines()
+                newsList = response.articles
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
+        }
     }
 }

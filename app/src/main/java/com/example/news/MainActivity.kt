@@ -18,7 +18,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
+            NewsTheme {
+                NewsHomeScreen(
+                    viewModel = TODO()
+                ) // Actually call your UI
+            }
         }
     }
 }
