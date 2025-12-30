@@ -8,17 +8,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 
-class NewsViewModel : ViewModel(){
+class NewsViewModel : ViewModel() {
 
     var newsList by
     mutableStateOf(emptyList<HomeItem>())
-
-    private set
+        private set
     var loading by mutableStateOf(true)
-    private set
-     init {
-         fetchnews()
-     }
+        private set
+
+    init {
+        fetchnews()
+    }
 
     private fun fetchnews() {
         viewModelScope.launch {
@@ -27,6 +27,8 @@ class NewsViewModel : ViewModel(){
                 newsList = response.articles
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                loading = false // Ensure loading stops regardless of success or failure
             }
         }
     }
