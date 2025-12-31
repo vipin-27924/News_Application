@@ -16,9 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NewsTheme {
-// Tracking whether to show the splash screen
                 var showSplash by remember { mutableStateOf(true) }
-
                 if (showSplash) {
                     // Call the splash function and switch state after delay
                     splashscreen().splash(onNavigate = { showSplash = false })

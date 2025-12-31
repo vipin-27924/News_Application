@@ -9,7 +9,7 @@ data class NewsResponse(
 )
 
 data class HomeItem(
-    val source: Source?,       // MUST BE NESTED
+    val source: Source?,
     val author: String?,
     val title: String?,
     val description: String?,
@@ -20,6 +20,6 @@ data class HomeItem(
 )
 
 data class Source(
-    val id: String?,           // MUST BE A STRING, NOT AN INT
+    val id: String?,
     val name: String?
 )
