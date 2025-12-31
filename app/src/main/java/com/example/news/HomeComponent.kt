@@ -21,7 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,11 +54,12 @@ fun NewsItem(article: HomeItem) {
 
           Text(
               text = article.title?:"no title",
-              fontSize = 28.sp,
+              fontSize = 24.sp,
               color = Color.Black,
-              maxLines = 2,
               overflow = TextOverflow.Ellipsis,
           )
+
+
           HorizontalDivider(
               modifier = Modifier.padding(vertical = 8.dp),
               thickness = 1.dp,
@@ -66,8 +75,13 @@ fun NewsItem(article: HomeItem) {
               overflow = TextOverflow.Ellipsis,
           )
 
-          Spacer(modifier = Modifier.height (10.dp))
 
+
+          Spacer(modifier = Modifier.height(4.dp))
+
+          ArticleLinkText(article.url)
+
+          Spacer(modifier = Modifier.height (10.dp))
           HorizontalDivider(
               modifier = Modifier.padding(vertical = 8.dp),
               thickness = 2.dp,
@@ -104,4 +118,39 @@ fun NewsItem(article: HomeItem) {
               )
           }
   }
+}
+
+@Composable
+fun ArticleLinkText(url: String?) {
+
+    val annotatedString = buildAnnotatedString {
+        append("Check The Full Article : ")
+
+        if (!url.isNullOrBlank()) {
+
+            withLink(
+                LinkAnnotation.Url(
+                    url = url,
+                    styles = TextLinkStyles(
+                        style = SpanStyle(
+                            color = Color(0xFF1A73E8),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    )
+                )
+            ) {
+                append(url)
+            }
+        } else {
+            withStyle(style = SpanStyle(color = Color.Red, fontWeight = FontWeight.Medium)) {
+                append("NOT AVAILABLE")
+            }
+        }
+    }
+
+    Text(
+        text = annotatedString,
+        fontSize = 12.sp,
+        lineHeight = 18.sp
+    )
 }

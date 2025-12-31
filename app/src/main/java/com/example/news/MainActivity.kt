@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
             NewsTheme {
                 var showSplash by remember { mutableStateOf(true) }
                 if (showSplash) {
-                    // Call the splash function and switch state after delay
                     splashscreen().splash(onNavigate = { showSplash = false })
                 } else {
                     NewsHomeScreen()
