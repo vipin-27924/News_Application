@@ -12,14 +12,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.OpenInNew
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -44,7 +54,7 @@ fun NewsItem(article: HomeItem) {
               .fillMaxWidth()
       ){
           Image(
-              rememberAsyncImagePainter(model = article.urlToImage),
+              rememberAsyncImagePainter(model = article.urlToImage?:"NOT AVAILABLE"),
               contentDescription = null,
               modifier = Modifier.fillMaxWidth()
                   .size(200.dp)
@@ -79,7 +89,7 @@ fun NewsItem(article: HomeItem) {
 
           Spacer(modifier = Modifier.height(4.dp))
 
-          ArticleLinkText(article.url)
+          ArticleActionButton(article.url)
 
           Spacer(modifier = Modifier.height (10.dp))
           HorizontalDivider(
@@ -121,36 +131,37 @@ fun NewsItem(article: HomeItem) {
 }
 
 @Composable
-fun ArticleLinkText(url: String?) {
+fun ArticleActionButton(url: String?) {
+    val uriHandler = LocalUriHandler.current // Used to manually open the browser
 
-    val annotatedString = buildAnnotatedString {
-        append("Check The Full Article : ")
-
-        if (!url.isNullOrBlank()) {
-
-            withLink(
-                LinkAnnotation.Url(
-                    url = url,
-                    styles = TextLinkStyles(
-                        style = SpanStyle(
-                            color = Color(0xFF1A73E8),
-                            textDecoration = TextDecoration.Underline
-                        )
-                    )
-                )
-            ) {
-                append(url)
-            }
-        } else {
-            withStyle(style = SpanStyle(color = Color.Red, fontWeight = FontWeight.Medium)) {
-                append("NOT AVAILABLE")
-            }
+    if (!url.isNullOrBlank()) {
+        // 1. Success State: Show a nice Button
+        Button(
+            onClick = { uriHandler.openUri(url) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Default.OpenInNew,
+                contentDescription = null,
+                modifier = Modifier.size(18.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(text = "Read Full Article", fontSize = 14.sp)
+        }
+    } else {
+        // 2. Empty/Error State: Show a disabled or "Unavailable" look
+        OutlinedButton(
+            onClick = { /* Do nothing */ },
+            enabled = false,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Link Not Available", color = Color.Gray)
         }
     }
-
-    Text(
-        text = annotatedString,
-        fontSize = 12.sp,
-        lineHeight = 18.sp
-    )
 }
