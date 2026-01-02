@@ -1,6 +1,4 @@
-package com.example.news
-
-import kotlinx.serialization.StringFormat
+package com.example.news.ui.home
 
 data class NewsResponse(
     val status: String,

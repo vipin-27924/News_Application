@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.news.ui.home.NewsHomeScreen
+import com.example.news.ui.splash.splashscreen
 import com.example.news.ui.theme.NewsTheme
 
 class MainActivity : ComponentActivity() {

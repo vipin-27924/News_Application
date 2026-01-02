@@ -1,12 +1,14 @@
-package com.example.news
+package com.example.news.data.remote.dto
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.news.data.remote.RetrofitInstance
+import com.example.news.ui.home.HomeItem
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
+
 // A sealed class ensures we handle every possible state
 sealed class NewsUiState {
     object Loading : NewsUiState()

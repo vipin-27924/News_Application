@@ -1,9 +1,8 @@
-package com.example.news
+package com.example.news.ui.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.news.R
 import kotlinx.coroutines.delay
 
 class splashscreen {
@@ -30,23 +29,23 @@ class splashscreen {
             onNavigate()
         }
         Column(
-            modifier = Modifier.fillMaxSize()
-                .background(Color.Black),
+            modifier = Modifier.Companion.fillMaxSize()
+                .background(Color.Companion.Black),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Companion.CenterHorizontally
         )
         {
             Image(
                 contentDescription = null,
                 painter = painterResource(id = R.drawable.splash),
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier.Companion.size(150.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.Companion.height(10.dp))
             Text(
                 text = "Latest News",
-                color = Color.White,
+                color = Color.Companion.White,
                 fontSize = 24.sp,
-                fontFamily = FontFamily.SansSerif
+                fontFamily = FontFamily.Companion.SansSerif
             )
         }
     }

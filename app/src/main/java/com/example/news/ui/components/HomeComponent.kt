@@ -1,12 +1,9 @@
-package com.example.news
+package com.example.news.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,31 +17,22 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.news.R
+import com.example.news.ui.home.HomeItem
 
 @Composable
 fun NewsCard(article: HomeItem) {
@@ -70,14 +58,13 @@ fun NewsCard(article: HomeItem) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                contentScale = ContentScale.Crop
             )
 
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
 
-                // 📰 Title
                 Text(
                     text = article.title ?: "No Title Available",
                     style = MaterialTheme.typography.titleMedium,
@@ -88,7 +75,6 @@ fun NewsCard(article: HomeItem) {
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                // 📝 Description
                 Text(
                     text = article.description ?: "No description available.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -99,7 +85,6 @@ fun NewsCard(article: HomeItem) {
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // 🔗 Action Button
                 Button(
                     onClick = {
                         article.url?.let { uriHandler.openUri(it) }
@@ -120,7 +105,6 @@ fun NewsCard(article: HomeItem) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // 🕒 Meta Info
                 Row {
                     Text(
                         text = "Published: ",
@@ -141,10 +125,9 @@ fun NewsCard(article: HomeItem) {
 
 @Composable
 fun ArticleActionButton(url: String?) {
-    val uriHandler = LocalUriHandler.current // Used to manually open the browser
+    val uriHandler = LocalUriHandler.current
 
     if (!url.isNullOrBlank()) {
-        // 1. Success State: Show a nice Button
         Button(
             onClick = { uriHandler.openUri(url) },
             modifier = Modifier
@@ -164,7 +147,6 @@ fun ArticleActionButton(url: String?) {
             Text(text = "Read Full Article", fontSize = 14.sp)
         }
     } else {
-        // 2. Empty/Error State: Show a disabled or "Unavailable" look
         OutlinedButton(
             onClick = { /* Do nothing */ },
             enabled = false,

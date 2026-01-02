@@ -1,12 +1,9 @@
-package com.example.news
+package com.example.news.data.remote
 
+import com.example.news.data.remote.api.newsApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import kotlin.getValue
-import kotlin.setValue
 import retrofit2.converter.gson.GsonConverterFactory
-
-
 
 object RetrofitInstance {
 
