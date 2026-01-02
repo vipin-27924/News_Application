@@ -47,7 +47,6 @@ fun NewsHomeScreen(viewModel: NewsViewModel = viewModel()) {
             }
         }
         is NewsUiState.Error -> {
-            // This is where your message will now appear professionally!
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = state.message, color = Color.Red, textAlign = TextAlign.Center)
             }
