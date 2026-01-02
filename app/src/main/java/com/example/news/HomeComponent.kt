@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -46,89 +47,97 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun NewsItem(article: HomeItem) {
-      Column(
-          modifier = Modifier
-              .background(Color.White)
-              .padding(16.dp)
-              .fillMaxWidth()
-      ){
-          Image(
-              rememberAsyncImagePainter(model = article.urlToImage?:"NOT AVAILABLE"),
-              contentDescription = null,
-              modifier = Modifier.fillMaxWidth()
-                  .size(200.dp)
-          )
+fun NewsCard(article: HomeItem) {
 
-          Spacer(modifier = Modifier.height(8.dp))
+    val uriHandler = LocalUriHandler.current
 
-          Text(
-              text = article.title?:"no title",
-              fontSize = 24.sp,
-              color = Color.Black,
-              overflow = TextOverflow.Ellipsis,
-          )
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column {
 
+            // 🖼 Image
+            Image(
+                painter = rememberAsyncImagePainter(article.urlToImage),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+            )
 
-          HorizontalDivider(
-              modifier = Modifier.padding(vertical = 8.dp),
-              thickness = 1.dp,
-              color = MaterialTheme.colorScheme.outlineVariant
-          )
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
 
-          Spacer(modifier = Modifier.height(2.dp))
+                // 📰 Title
+                Text(
+                    text = article.title ?: "No Title Available",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
 
-          Text(
-              text = article.description?:"No Description",
-              fontSize = 18.sp,
-              color = Color.Black,
-              overflow = TextOverflow.Ellipsis,
-          )
+                Spacer(modifier = Modifier.height(6.dp))
 
+                // 📝 Description
+                Text(
+                    text = article.description ?: "No description available.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
 
+                Spacer(modifier = Modifier.height(12.dp))
 
-          Spacer(modifier = Modifier.height(4.dp))
+                // 🔗 Action Button
+                Button(
+                    onClick = {
+                        article.url?.let { uriHandler.openUri(it) }
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Read Full Article")
+                }
 
-          ArticleActionButton(article.url)
+                Spacer(modifier = Modifier.height(8.dp))
 
-          Spacer(modifier = Modifier.height (10.dp))
-          HorizontalDivider(
-              modifier = Modifier.padding(vertical = 8.dp),
-              thickness = 2.dp,
-              color = MaterialTheme.colorScheme.outlineVariant
-          )
-
-          Row {
-              Text(
-                  text = "Published At : ",
-                  fontSize = 12.sp,
-                  color = Color.Black,
-              )
-
-              Spacer(modifier = Modifier.width(4.dp))
-
-              Text(
-                  text =article.publishedAt?:"NOT AVAILABLE",
-                  fontSize = 12.sp,
-              )
-          }
-          Spacer(modifier = Modifier.height(4.dp))
-
-          Row {
-              Text(
-                  text = "Author : ",
-                  fontSize = 12.sp,
-                  color = Color.Black,
-              )
-              Spacer(modifier = Modifier.width(4.dp))
-              Text(
-                  text = article.author?:"NOT AVAILABLE",
-                  fontSize = 12.sp,
-                  color = Color.Black,
-              )
-          }
-  }
+                // 🕒 Meta Info
+                Row {
+                    Text(
+                        text = "Published: ",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = article.publishedAt ?: "N/A",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }
 }
+
 
 @Composable
 fun ArticleActionButton(url: String?) {
@@ -143,7 +152,7 @@ fun ArticleActionButton(url: String?) {
                 .padding(vertical = 8.dp),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = colorResource(R.color.md_theme_onError)
             )
         ) {
             Icon(

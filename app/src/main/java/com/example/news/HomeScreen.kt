@@ -1,16 +1,23 @@
 package com.example.news
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,12 +26,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHomeScreen(viewModel: NewsViewModel = viewModel()) {
 
 
 
     val state = viewModel.uiState
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     when (state) {
         is NewsUiState.Loading -> {
@@ -33,14 +42,20 @@ fun NewsHomeScreen(viewModel: NewsViewModel = viewModel()) {
             }
         }
         is NewsUiState.Success -> {
+
             Column(
                 modifier = Modifier.fillMaxSize()
-                    .padding(all = 16.dp),
+
+                    .statusBarsPadding(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+
+            )
+            {
+                NewsTopBar()
+                Spacer(modifier = Modifier.height(8.dp))
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(state.articles) { article ->
-                        NewsItem(article)
+                        NewsCard(article)
                         Spacer(modifier = Modifier.height(20.dp))
                     }
                 }
