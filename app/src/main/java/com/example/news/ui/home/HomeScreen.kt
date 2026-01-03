@@ -30,69 +30,60 @@ import com.example.news.ui.components.NewsTopBar
 import com.example.news.data.remote.dto.NewsUiState
 import com.example.news.data.remote.dto.NewsViewModel
 import com.example.news.ui.components.HomeNavBar
-
+// In NewsHomeScreen.kt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
-fun NewsHomeScreen(viewModel: NewsViewModel = viewModel(),navController: NavHostController = rememberNavController()) {
-
-
-
-    val state = viewModel.uiState
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-
-    when (state) {
-        is NewsUiState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+fun NewsHomeScreen(
+    viewModel: NewsViewModel = viewModel(),
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold(
+        topBar = { NewsTopBar() },
+        bottomBar = { HomeNavBar(navController = navController) }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier.padding(innerPadding) // This prevents overlap
+        ) {
+            composable("home") {
+                NewsList(viewModel)
             }
-        }
-        is NewsUiState.Success -> {
-
-            Column(
-                modifier = Modifier.fillMaxSize()
-
-                    .statusBarsPadding(),
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            )
-            {
-                NewsTopBar()
-                Spacer(modifier = Modifier.height(8.dp))
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(state.articles) { article ->
-                        NewsCard(article)
-                        Spacer(modifier = Modifier.height(20.dp))
-                    }
-                }
-                Scaffold(
-                    bottomBar = {
-                        // We pass the controller to the NavBar so it can tell the app to move
-                        HomeNavBar(navController = navController)
-                    }
-                ) { innerPadding ->
-                    // The NavHost is where the actual page swapping happens
-                    NavHost(
-                        navController = navController,
-                        startDestination = "home",
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable("home") { HomeScreen() }
-                        composable("trending") {  }
-                        composable("saved") {  }
-                    }
+            composable("trending") {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Trending Content")
                 }
             }
-        }
-        is NewsUiState.Error -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = state.message, color = Color.Red, textAlign = TextAlign.Center)
+            composable("saved") {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Saved Articles")
+                }
             }
         }
     }
 }
 
 @Composable
-fun HomeScreen() {
-    TODO("Not yet implemented")
+fun NewsList(viewModel: NewsViewModel) {
+    val state = viewModel.uiState
+    when (state) {
+        is NewsUiState.Loading -> {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+        is NewsUiState.Success -> {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(state.articles) { article ->
+                    NewsCard(article)
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+            }
+        }
+        is NewsUiState.Error -> {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = state.message, color = Color.Red)
+            }
+        }
+    }
 }

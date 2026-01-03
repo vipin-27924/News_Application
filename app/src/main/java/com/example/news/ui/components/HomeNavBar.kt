@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.news.R
 
 sealed class NavScreen(val route: String, val title: String, val icon: ImageVector) {
@@ -21,7 +22,7 @@ sealed class NavScreen(val route: String, val title: String, val icon: ImageVect
 }
 
 @Composable
-fun HomeNavBar() {
+fun HomeNavBar(navController: NavController) {
     val items = listOf(NavScreen.Home, NavScreen.Trending, NavScreen.Saved)
     var selectedItem by remember { mutableIntStateOf(0) }
 
@@ -35,10 +36,12 @@ fun HomeNavBar() {
                 icon = { Icon(screen.icon, contentDescription = screen.title) },
                 label = { Text(screen.title) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = {
+                    selectedItem = index
+                          },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = colorResource(id = R.color.ActionIndigo),
-                    indicatorColor = colorResource(id = R.color.BackgroundMain)
+                    selectedIconColor = colorResource(id = R.color.md_theme_onPrimaryContainer),
+                    indicatorColor = colorResource(id = R.color.md_theme_surfaceVariant)
                 )
             )
         }

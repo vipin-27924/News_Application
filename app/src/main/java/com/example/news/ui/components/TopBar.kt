@@ -6,6 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.colorResource
+import com.example.news.R
 
 
 @Composable
@@ -20,7 +22,7 @@ fun NewsTopBar() {
             )
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = colorResource(R.color.md_theme_onPrimaryContainer),
             scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
