@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.news.R
-import com.example.news.ui.home.HomeItem
+import com.example.news.data.remote.dto.HomeItem
 
 @Composable
 fun NewsCard(article: HomeItem) {

@@ -1,6 +1,6 @@
 package com.example.news.data.remote
 
-import com.example.news.data.remote.api.newsApi
+import com.example.news.data.remote.api.NewsApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,12 +16,12 @@ object RetrofitInstance {
         }
         .build()
 
-    val api: newsApi by lazy {
+    val api: NewsApi by lazy {
         Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(newsApi::class.java)
+            .create(NewsApi::class.java)
     }
 }

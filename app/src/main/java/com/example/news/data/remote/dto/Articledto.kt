@@ -1,4 +1,4 @@
-package com.example.news.ui.home
+package com.example.news.data.remote.dto
 
 data class NewsResponse(
     val status: String,

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.news.R
 import kotlinx.coroutines.delay
 
-class splashscreen {
+class SplashScreen {
     @Composable
     fun splash(onNavigate: () -> Unit){
         LaunchedEffect(Unit) {

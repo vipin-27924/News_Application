@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.data.remote.RetrofitInstance
-import com.example.news.ui.home.HomeItem
 import kotlinx.coroutines.launch
 
 // A sealed class ensures we handle every possible state

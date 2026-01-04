@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.news.ui.home.NewsHomeScreen
-import com.example.news.ui.splash.splashscreen
+import com.example.news.ui.splash.SplashScreen
 import com.example.news.ui.theme.NewsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             NewsTheme {
                 var showSplash by remember { mutableStateOf(true) }
                 if (showSplash) {
-                    splashscreen().splash(onNavigate = { showSplash = false })
+                    SplashScreen().splash(onNavigate = { showSplash = false })
                 } else {
                     NewsHomeScreen()
                 }
