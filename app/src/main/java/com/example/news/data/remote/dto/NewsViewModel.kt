@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.news.data.remote.RetrofitInstance
 import kotlinx.coroutines.launch
 
-// A sealed class ensures we handle every possible state
 sealed class NewsUiState {
     object Loading : NewsUiState()
     data class Success(val articles: List<HomeItem>) : NewsUiState()
