@@ -38,6 +38,13 @@ fun HomeNavBar(navController: NavController) {
                 selected = selectedItem == index,
                 onClick = {
                     selectedItem = index
+                    navController.navigate(screen.route){
+                        popUpTo(navController.graph.startDestinationId){
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                           },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = colorResource(id = R.color.md_theme_onPrimaryContainer),

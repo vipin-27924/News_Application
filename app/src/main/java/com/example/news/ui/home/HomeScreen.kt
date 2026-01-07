@@ -30,6 +30,8 @@ import com.example.news.ui.components.NewsTopBar
 import com.example.news.data.remote.dto.NewsUiState
 import com.example.news.data.remote.dto.NewsViewModel
 import com.example.news.ui.components.HomeNavBar
+import com.example.news.ui.components.NavScreen
+
 // In NewsHomeScreen.kt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,13 +45,13 @@ fun NewsHomeScreen(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = "home",
+            startDestination = NavScreen.Home.route,
             modifier = Modifier.padding(innerPadding) // This prevents overlap
         ) {
-            composable("NewsList") {
+            composable(NavScreen.Home.route) {
                 NewsList(viewModel)
             }
-            composable("trending") {
+            composable(NavScreen.Trending.route) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text("Trending Content")
                 }
