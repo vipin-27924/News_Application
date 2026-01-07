@@ -46,7 +46,7 @@ fun NewsHomeScreen(
             startDestination = "home",
             modifier = Modifier.padding(innerPadding) // This prevents overlap
         ) {
-            composable("home") {
+            composable("NewsList") {
                 NewsList(viewModel)
             }
             composable("trending") {
