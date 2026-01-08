@@ -32,7 +32,6 @@ import com.example.news.data.remote.dto.NewsViewModel
 import com.example.news.ui.components.HomeNavBar
 import com.example.news.ui.components.NavScreen
 
-// In NewsHomeScreen.kt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsHomeScreen(
@@ -46,7 +45,7 @@ fun NewsHomeScreen(
         NavHost(
             navController = navController,
             startDestination = NavScreen.Home.route,
-            modifier = Modifier.padding(innerPadding) // This prevents overlap
+            modifier = Modifier.padding(innerPadding)
         ) {
             composable(NavScreen.Home.route) {
                 NewsList(viewModel)
